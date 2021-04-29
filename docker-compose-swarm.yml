@@ -27,7 +27,7 @@ services:
       dockerfile: ./docker/jimi-core/Dockerfile
     volumes:
     - ./jimi-core/data/log:/home/jimi/log
-    - ./jimi-core/data/plugins:/home/jimi/plugins
+    - ./plugins:/home/jimi/plugins
     ports:
     - "5000:5000"
     tty: true
@@ -41,7 +41,7 @@ services:
       dockerfile: ./docker/jimi-web/Dockerfile
     volumes:
     - ./jimi-web/data/log:/home/jimi/log
-    - ./jimi-web/data/plugins:/home/jimi/plugins
+    - ./plugins:/home/jimi/plugins
     ports:
     - "4443:4443"
     - "5002:5002"
