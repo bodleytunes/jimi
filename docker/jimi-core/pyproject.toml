@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "jimi-core"
+version = "0.1.0"
+description = "For jimi-core container"
+authors = ["JMC <jon@m87.co>"]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+requests = "^2.25.1"
+netaddr = "^0.8.0"
+pymongo = "^3.11.3"
+pycryptodome = "^3.10.1"
+PyJWT = "^2.0.1"
+croniter = "^1.0.12"
+pyreadline = "^2.1"
+cryptography = "^3.4.7"
+onetimepass = "^1.0.1"
+numpy = "^1.20.2"
+matplotlib = "^3.4.1"
+sklearn = "^0.0"
+paramiko = "^2.7.2"
+pywinrm = "^0.4.1"
+smbprotocol = "^1.5.0"
+scp = "^0.13.3"
+sshtunnel = "^0.4.0"
+pythonping = "^1.0.16"
+json2html = "^1.3.0"
+
+[tool.poetry.dev-dependencies]
+autopep8 = "^1.5.6"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

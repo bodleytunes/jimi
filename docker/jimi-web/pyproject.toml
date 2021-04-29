@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "jimi-web"
+version = "0.1.0"
+description = "Jimi Web Container"
+authors = ["JMC <jon@m87.co>"]
+license = "Apache"
+
+[tool.poetry.dependencies]
+python = "^3.7"
+Flask = "^1.1.2"
+requests = "^2.25.1"
+netaddr = "^0.8.0"
+wheel = "^0.36.2"
+numpy = "^1.20.2"
+matplotlib = "^3.4.1"
+sklearn = "^0.0"
+paramiko = "^2.7.2"
+pywinrm = "^0.4.1"
+smbprotocol = "^1.5.0"
+scp = "^0.13.3"
+sshtunnel = "^0.4.0"
+pythonping = "^1.0.16"
+gunicorn = "^20.1.0"
+PyJWT = "^2.1.0"
+onetimepass = "^1.0.1"
+pycryptodome = "^3.10.1"
+pymongo = "^3.11.3"
+cryptography = "^3.4.7"
+croniter = "^1.0.12"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
