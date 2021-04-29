@@ -9,7 +9,7 @@ services:
     ports:
     - "27017:27017"
     networks:
-      jimi_net_overlay:
+      jimi_net_bridge:
         #ipv4_address: 172.16.10.12
     volumes:
       - jimi_db_volume
@@ -31,7 +31,7 @@ services:
     tty: true
     entrypoint:  ["./entrypoint.sh"]
     networks:
-      jimi_net_overlay:
+      jimi_net_bridge:
 
   web:
     build:
@@ -44,7 +44,7 @@ services:
     - "4443:4443"
     - "5002:5002"
     networks:
-      jimi_net_overlay:
+      jimi_net_bridge:
     hostname: jimi_web
     container_name: jimi_web
     depends_on: 
@@ -52,11 +52,11 @@ services:
     entrypoint: ["./start_web.sh"]
 
 networks:
-  jimi_net_overlay:
-    driver: overlay
-    ipam:
-      config:
-        - subnet: "172.16.10.0/24"
+  jimi_net_bridge:
+    driver: bridge
+    #ipam:
+    #  config:
+    #    - subnet: "172.16.10.0/24"
 
 volumes:
-  jimi_db_volume
+  jimi_db_volume:
