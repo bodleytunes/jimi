@@ -4,19 +4,22 @@ services:
     hostname: jimi_db
     container_name: jimi_db
     image: mongo:latest
-    volumes:
-    - ./jimi-db/data/db:/data/db
     ports:
     - "27017:27017"
     networks:
       jimi_net_overlay:
         #ipv4_address: 172.16.10.12
     volumes:
-      - jimi_db_volume
+      - /docker/volumes/jimi-db:/data/db
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
 
   core:
     hostname: jimi_core
     container_name: jimi_core
+    image: jimi_core:latest
     depends_on: 
       - db
     #extra_hosts:
@@ -55,6 +58,7 @@ services:
         #ipv4_address: 172.16.10.11
     hostname: jimi_web
     container_name: jimi_web
+    image: jimi_web:latest
     depends_on: 
       - core
     entrypoint: ["./start_web.sh"]
@@ -66,5 +70,8 @@ networks:
       config:
         - subnet: "172.16.10.0/24"
 
-volumes:
-  jimi_db_volume
+
+#volumes:
+#  jimi_db_volume:
+
+
