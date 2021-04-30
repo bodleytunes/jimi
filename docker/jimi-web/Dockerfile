@@ -22,7 +22,7 @@ RUN pip3 install "poetry==$POETRY_VERSION"
 COPY docker/jimi-web/pyproject.toml docker/jimi-web/poetry.lock ./
 
 # Install venv in workdir via poetry 
-RUN poetry config virtualenvs.in-project true && poetry install
+RUN poetry config virtualenvs.in-project true && poetry update && poetry install
 
 # directory works
 RUN mkdir data && mkdir data/log && mkdir plugins
@@ -39,6 +39,11 @@ RUN openssl genrsa -out private.pem 2048 && \
 
 
 FROM base as final
+
+# Requires git for Batfish 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends git  && \
+    rm -rf /var/lib/apt/lists/*
 
 COPY --from=builder /home/jimi /home/jimi
 
