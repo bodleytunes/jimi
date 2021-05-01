@@ -13,12 +13,23 @@ services:
       jimi_net_bridge:
         #ipv4_address: 172.16.10.12
 
+  web_certs:
+    hostname: web_certs
+    depends_on: 
+      - db
+    build:
+      context: .
+      dockerfile: ./docker/jimi-certs/Dockerfile
+    volumes:
+      - ./docker/shared:/certs
+    entrypoint: ["/home/entrypoint.sh"]
+    
 
   core:
     hostname: jimi_core
     container_name: jimi_core
     depends_on: 
-      - db
+      - web_certs
     hostname: jimi_core
     build:
       context: .

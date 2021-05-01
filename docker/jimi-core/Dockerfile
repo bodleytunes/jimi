@@ -30,11 +30,14 @@ WORKDIR /home/jimi/data
 
 RUN wget https://raw.githubusercontent.com/z1pti3/jimi-docker/master/data/settings.json
 
-RUN openssl genrsa -out private.pem 2048 && \ 
-    openssl rsa -in private.pem -outform PEM -pubout -out sessionPub.pem \
-    && openssl rsa -in private.pem -out sessionPriv.pem -outform PEM && \
-    rm private.pem && \
-    openssl req -newkey rsa:2048 -nodes -keyout web.key -x509 -days 365 -out web.cert -subj "/C=GB/ST=London/L=London/O=jimi/OU=jimi/CN=jimiproject"
+# copy shared certs into /data folder
+COPY docker/shared ./
+
+#RUN openssl genrsa -out private.pem 2048 && \ 
+#    openssl rsa -in private.pem -outform PEM -pubout -out sessionPub.pem \
+#    && openssl rsa -in private.pem -out sessionPriv.pem -outform PEM && \
+#    rm private.pem && \
+#    openssl req -newkey rsa:2048 -nodes -keyout web.key -x509 -days 365 -out web.cert -subj "/C=GB/ST=London/L=London/O=jimi/OU=jimi/CN=jimiproject"
 
 
 
