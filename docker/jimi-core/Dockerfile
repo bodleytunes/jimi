@@ -50,6 +50,9 @@ COPY --from=builder /home/jimi /home/jimi
 COPY core /home/jimi/core
 COPY system /home/jimi/system
 COPY screens /home/jimi/screens
+# is needed for core? make sure to check this
+COPY web /home/jimi/web
+COPY react-web /home/jimi/react-web
 
 WORKDIR /home/jimi
 

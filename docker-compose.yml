@@ -5,14 +5,14 @@ services:
     container_name: jimi_db
     image: mongo:latest
     volumes:
-    - ./jimi-db/data/db:/data/db
+    #- ./jimi-db/data/db:/data/db
+      - jimi_db_volume:/data/db
     ports:
     - "27017:27017"
     networks:
       jimi_net_bridge:
         #ipv4_address: 172.16.10.12
-    volumes:
-      - jimi_db_volume
+
 
   core:
     hostname: jimi_core

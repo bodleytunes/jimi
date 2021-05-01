@@ -52,6 +52,7 @@ COPY core /home/jimi/core
 COPY system /home/jimi/system
 COPY web /home/jimi/web
 COPY react-web /home/jimi/react-web
+COPY screens /home/jimi/screens
 
 WORKDIR /home/jimi
 
