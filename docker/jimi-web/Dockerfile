@@ -73,4 +73,7 @@ RUN chmod 700 start_web.sh
 
 ENV PATH="/home/jimi/.venv/bin:$PATH"
 
+CMD ["./start_web.sh"]
+
+
 

@@ -62,6 +62,8 @@ WORKDIR /home/jimi
 COPY jimi_core.py jimi_cli.py jimi.py docker/jimi-core/entrypoint.sh ./
 
 RUN chmod 700 entrypoint.sh
-#CMD ["./entrypoint.sh"]
 ENV PATH="/jimi/.venv/bin:$PATH"
+
+CMD ["./entrypoint.sh"]
+
 
