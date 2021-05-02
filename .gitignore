@@ -372,3 +372,4 @@ plugins-available
 .dockerignore
 jimi.code-workspace
 *.code-workspace
+docker/shared
