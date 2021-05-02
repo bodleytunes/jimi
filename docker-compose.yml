@@ -26,11 +26,10 @@ services:
     
 
   core:
-    hostname: jimi_core
+    hostname: jimi-core
     container_name: jimi_core
     depends_on: 
       - web_certs
-    hostname: jimi_core
     build:
       context: .
       dockerfile: ./docker/jimi-core/Dockerfile
@@ -56,7 +55,7 @@ services:
     - "5002:5002"
     networks:
       jimi_net_bridge:
-    hostname: jimi_web
+    hostname: jimi-web
     container_name: jimi_web
     depends_on: 
       - core
