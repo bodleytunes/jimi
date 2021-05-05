@@ -1,17 +1,17 @@
 {
     "system": {
         "systemID": 0,
-        "accessAddress": "jimi-core",
+        "accessAddress": "localhost",
         "accessPort": 5000,
         "secure": false
     },
     "debug": {
-        "level": 1,
+        "level": 5,
         "buffer": 1000
     },
     "mongodb": {
         "hosts": [
-            "jimi-db:27017"
+            "localhost:27017"
         ],
         "db": "jimi",
         "username": null,

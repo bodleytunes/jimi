@@ -57,6 +57,9 @@ COPY jimi_core.py jimi_cli.py jimi.py docker/jimi-core/entrypoint.sh ./
 RUN chmod 700 entrypoint.sh
 ENV PATH="/jimi/.venv/bin:$PATH"
 
+# test env vars for jimi db
+ENV DB=jimi-db
+
 CMD ["./entrypoint.sh"]
 
 
