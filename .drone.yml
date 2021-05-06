@@ -13,7 +13,6 @@ steps:
       - name: docker_socket
         path: /var/run/docker.sock
     commands:
-      - docker login -u ${USERNAME} reg.wizznet.co.uk:80
       - "docker build -t jimi-core . -f docker/jimi-core/Dockerfile"
       - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
       - "docker push reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
@@ -32,15 +31,18 @@ volumes:
   - name: docker_socket
     host:
       path: /var/run/docker.sock
-  #- name: jimi-web
-  #  image: docker
-  #  settings:
-  #    dockerfile: docker/jimi-web/Dockerfile
-  #    context: .
-  #    repo: http://reg.wizznet.co.uk:80/jimi/jimi_web
-  #    auto_tag: true
-  #  when:
-  #    event:
-  #      - tag
-  #    ref:
-  #      - refs/tags/v*
+
+image_pull_secrets:
+  - dockerconfigjson
+    #- name: jimi-web
+    #  image: docker
+    #  settings:
+    #    dockerfile: docker/jimi-web/Dockerfile
+    #    context: .
+    #    repo: http://reg.wizznet.co.uk:80/jimi/jimi_web
+    #    auto_tag: true
+    #  when:
+    #    event:
+    #      - tag
+    #    ref:
+    #      - refs/tags/v*
