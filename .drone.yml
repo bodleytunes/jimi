@@ -7,14 +7,21 @@ steps:
     image: docker
     settings:
       insecure: true
+
     privileged: true
     volumes:
       - name: docker_socket
         path: /var/run/docker.sock
     commands:
+      - docker login -u ${USERNAME} reg.wizznet.co.uk:80
       - "docker build -t jimi-core . -f docker/jimi-core/Dockerfile"
       - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
       - "docker push reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
+    environment:
+      USERNAME:
+        from_secret: username
+      PASSWORD:
+        from_secret: password
     when:
       event:
         - tag
