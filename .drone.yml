@@ -7,7 +7,6 @@ steps:
     image: docker
     settings:
       insecure: true
-
     privileged: true
     environment:
       DRONE_DOCKER_CONFIG: /root/.docker/config.json
@@ -35,15 +34,3 @@ volumes:
   - name: auth
     host:
       path: /root/.docker/config.json
-    #- name: jimi-web
-    #  image: docker
-    #  settings:
-    #    dockerfile: docker/jimi-web/Dockerfile
-    #    context: .
-    #    repo: http://reg.wizznet.co.uk:80/jimi/jimi_web
-    #    auto_tag: true
-    #  when:
-    #    event:
-    #      - tag
-    #    ref:
-    #      - refs/tags/v*
