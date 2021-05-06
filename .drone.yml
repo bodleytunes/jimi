@@ -10,7 +10,7 @@ steps:
       - name: docker_socket
         path: /var/run/docker.sock
     commands:
-      - docker-compose build jimi-core
+      - docker build -t jimi_core . -f docker/jimi-core/Dockerfile
       - docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi_core:${DRONE_SEMVER}
       - docker push reg.wizznet.co.uk:80/jimi/jimi_core:${DRONE_SEMVER}
     when:
