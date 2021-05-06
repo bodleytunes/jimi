@@ -16,24 +16,19 @@ steps:
       - "docker build -t jimi-core . -f docker/jimi-core/Dockerfile"
       - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
       - "docker push reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
-    environment:
-      USERNAME:
-        from_secret: username
-      PASSWORD:
-        from_secret: password
     when:
       event:
         - tag
       ref:
         - refs/tags/v*
 
+image_pull_secrets:
+  - dockerconfigjson
+
 volumes:
   - name: docker_socket
     host:
       path: /var/run/docker.sock
-
-image_pull_secrets:
-  - dockerconfigjson
     #- name: jimi-web
     #  image: docker
     #  settings:
