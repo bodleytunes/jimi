@@ -29,7 +29,7 @@ RUN mkdir data && mkdir data/log && mkdir plugins
 WORKDIR /home/jimi/data
 
 #RUN wget https://raw.githubusercontent.com/z1pti3/jimi-docker/master/data/settings.json
-COPY data/settings.json ./
+COPY docker/shared/settings.json ./
 
 # copy shared certs into /data folder
 COPY docker/shared ./

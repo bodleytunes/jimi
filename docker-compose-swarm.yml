@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   db:
-    hostname: jimi_db
-    container_name: jimi_db
+    hostname: jimi-db
+    container_name: jimi-db
     image: mongo:latest
     ports:
     - "27017:27017"
@@ -16,12 +16,12 @@ services:
           - node.role == worker
 
   core:
-    hostname: jimi_core
-    container_name: jimi_core
-    image: jimi_core:latest
+    hostname: jimi-core
+    container_name: jimi-core
+    image: jimi-core:latest
     depends_on: 
       - db
-    hostname: jimi_core
+    hostname: jimi-core
     build:
       context: .
       dockerfile: ./docker/jimi-core/Dockerfile
@@ -47,9 +47,9 @@ services:
     - "5002:5002"
     networks:
       jimi_net_overlay:
-    hostname: jimi_web
-    container_name: jimi_web
-    image: jimi_web:latest
+    hostname: jimi-web
+    container_name: jimi-web
+    image: jimi-web:latest
     depends_on: 
       - core
     entrypoint: ["./start_web.sh"]

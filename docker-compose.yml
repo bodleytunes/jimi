@@ -1,8 +1,8 @@
 version: '3.7'
 services:
   db:
-    hostname: jimi_db
-    container_name: jimi_db
+    hostname: jimi-db
+    container_name: jimi-db
     image: mongo:latest
     volumes:
     #- ./jimi-db/data/db:/data/db
