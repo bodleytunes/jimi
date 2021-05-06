@@ -1,28 +1,18 @@
 kind: pipeline
-type: docker
+type: exec
 name: default
 
 steps:
   - name: jimi-core
-    image: docker
-    privileged: true
-    volumes:
-      - name: docker_socket
-        path: /var/run/docker.sock
     commands:
-      - "docker build -t jimi_core . -f docker/jimi-core/Dockerfile"
-      - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi_core:${DRONE_SEMVER}"
-      - "docker push reg.wizznet.co.uk:80/jimi/jimi_core:${DRONE_SEMVER}"
+      - "docker build -t jimi-core . -f docker/jimi-core/Dockerfile"
+      - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
+      - "docker push reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
     when:
       event:
         - tag
       ref:
         - refs/tags/v*
-
-volumes:
-  - name: docker_socket
-    host:
-      path: /var/run/docker.sock
   #- name: jimi-web
   #  image: docker
   #  settings:
