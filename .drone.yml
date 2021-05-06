@@ -5,6 +5,8 @@ name: default
 steps:
   - name: jimi-core
     image: docker
+    settings:
+      insecure: true
     privileged: true
     volumes:
       - name: docker_socket
