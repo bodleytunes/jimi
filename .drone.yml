@@ -10,3 +10,8 @@ steps:
       repo: reg.wizznet.co.uk/jimi/jimi_core
       registry: reg.wizznet.co.uk
       auto_tag: true
+    when:
+      event:
+        - tag
+      ref:
+        - refs/tags/v*
