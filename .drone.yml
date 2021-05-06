@@ -5,13 +5,10 @@ name: default
 steps:
   - name: jimi-core
     image: docker
-    environment:
-      USERNAME:
-        from_secret: username
-      PASSWORD:
-        from_secret: password
+    privileged: true
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
+      - name: docker_socket
+        path: /var/run/docker.sock
     commands:
       - docker build . -t -f docker/jimi-core/Dockerfile
       - docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi_core:${DRONE_SEMVER}
@@ -21,6 +18,11 @@ steps:
         - tag
       ref:
         - refs/tags/v*
+
+volumes:
+  - name: docker_socket
+    host:
+      path: /var/run/docker.sock
   #- name: jimi-web
   #  image: docker
   #  settings:
