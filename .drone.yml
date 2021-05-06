@@ -9,9 +9,13 @@ steps:
       insecure: true
 
     privileged: true
+    environment:
+      DRONE_DOCKER_CONFIG: /root/.docker/config.json
     volumes:
       - name: docker_socket
         path: /var/run/docker.sock
+      - name: auth
+        path: /root/.docker/config.json
     commands:
       - "docker build -t jimi-core . -f docker/jimi-core/Dockerfile"
       - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
@@ -21,7 +25,6 @@ steps:
         - tag
       ref:
         - refs/tags/v*
-
 image_pull_secrets:
   - dockerconfigjson
 
@@ -29,6 +32,9 @@ volumes:
   - name: docker_socket
     host:
       path: /var/run/docker.sock
+  - name: auth
+    host:
+      path: /root/.docker/config.json
     #- name: jimi-web
     #  image: docker
     #  settings:
