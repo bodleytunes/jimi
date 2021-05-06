@@ -1,13 +1,12 @@
-workspace:
-  base: /build
+kind: pipeline
+type: docker
+name: default
 
-pipeline:
-  build:
-    steps:
-      - name: jimi-core
-        image: plugins/docker
-        settings:
-          dockerfile: docker/jimi-core/Dockerfile
-          repo: reg.wizznet.co.uk/jimi/jimi_core
-          registry: reg.wizznet.co.uk
-          auto_tag: true
+steps:
+  - name: jimi-core
+    image: plugins/docker
+    settings:
+      dockerfile: docker/jimi-core/Dockerfile
+      repo: reg.wizznet.co.uk/jimi/jimi_core
+      registry: reg.wizznet.co.uk
+      auto_tag: true
