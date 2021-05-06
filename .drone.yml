@@ -4,14 +4,32 @@ name: default
 
 steps:
   - name: jimi-core
-    image: plugins/docker
-    settings:
-      dockerfile: docker/jimi-core/Dockerfile
-      repo: reg.wizznet.co.uk/jimi/jimi_core
-      registry: reg.wizznet.co.uk
-      auto_tag: true
+    image: docker
+    environment:
+      USERNAME:
+        from_secret: username
+      PASSWORD:
+        from_secret: password
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    commands:
+      - docker build . -t -f docker/jimi-core/Dockerfile
+      - docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi_core:${DRONE_SEMVER}
+      - docker push reg.wizznet.co.uk:80/jimi/jimi_core:${DRONE_SEMVER}
     when:
       event:
         - tag
       ref:
         - refs/tags/v*
+  #- name: jimi-web
+  #  image: docker
+  #  settings:
+  #    dockerfile: docker/jimi-web/Dockerfile
+  #    context: .
+  #    repo: http://reg.wizznet.co.uk:80/jimi/jimi_web
+  #    auto_tag: true
+  #  when:
+  #    event:
+  #      - tag
+  #    ref:
+  #      - refs/tags/v*
