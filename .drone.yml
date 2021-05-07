@@ -24,8 +24,28 @@ steps:
         - tag
       ref:
         - refs/tags/v*
-image_pull_secrets:
-  - dockerconfigjson
+
+  - name: jimi-web
+    image: docker
+    settings:
+      insecure: true
+    privileged: true
+    environment:
+      DRONE_DOCKER_CONFIG: /root/.docker/config.json
+    volumes:
+      - name: docker_socket
+        path: /var/run/docker.sock
+      - name: auth
+        path: /root/.docker/config.json
+    commands:
+      - "docker build -t jimi-web . -f docker/jimi-web/Dockerfile"
+      - "docker tag jimi-web reg.wizznet.co.uk:80/jimi/jimi-web:${DRONE_SEMVER}"
+      - "docker push reg.wizznet.co.uk:80/jimi/jimi-web:${DRONE_SEMVER}"
+    when:
+      event:
+        - tag
+      ref:
+        - refs/tags/v*
 
 volumes:
   - name: docker_socket
@@ -34,3 +54,6 @@ volumes:
   - name: auth
     host:
       path: /root/.docker/config.json
+
+image_pull_secrets:
+  - dockerconfigjson
