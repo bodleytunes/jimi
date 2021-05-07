@@ -7,6 +7,10 @@ steps:
     image: docker
     settings:
       insecure: true
+      username:
+        from_secret: username
+      password:
+        from_secret: password
     privileged: true
     environment:
       DRONE_DOCKER_CONFIG: /root/.docker/config.json
@@ -29,6 +33,10 @@ steps:
     image: docker
     settings:
       insecure: true
+      username:
+        from_secret: username
+      password:
+        from_secret: password
     privileged: true
     environment:
       DRONE_DOCKER_CONFIG: /root/.docker/config.json
