@@ -63,7 +63,7 @@ RUN chmod 700 entrypoint.sh
 ENV PATH="/jimi/.venv/bin:$PATH"
 
 # test env vars for jimi db
-ENV DB=jimi-db
+#ENV DB=jimi-db
 
 CMD ["./entrypoint.sh"]
 
