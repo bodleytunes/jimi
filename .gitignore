@@ -373,3 +373,4 @@ plugins-available
 jimi.code-workspace
 *.code-workspace
 docker/shared
+docker/data/sessionPriv.pem
