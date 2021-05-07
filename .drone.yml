@@ -22,7 +22,9 @@ steps:
     commands:
       - "docker build -t jimi-core . -f docker/jimi-core/Dockerfile"
       - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
+      - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:latest"
       - "docker push reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
+      - "docker push reg.wizznet.co.uk:80/jimi/jimi-core:latest"
     when:
       event:
         - tag
@@ -48,7 +50,9 @@ steps:
     commands:
       - "docker build -t jimi-web . -f docker/jimi-web/Dockerfile"
       - "docker tag jimi-web reg.wizznet.co.uk:80/jimi/jimi-web:${DRONE_SEMVER}"
+      - "docker tag jimi-web reg.wizznet.co.uk:80/jimi/jimi-web:latest"
       - "docker push reg.wizznet.co.uk:80/jimi/jimi-web:${DRONE_SEMVER}"
+      - "docker push reg.wizznet.co.uk:80/jimi/jimi-web:latest"
     when:
       event:
         - tag
