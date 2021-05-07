@@ -43,7 +43,7 @@ RUN apt-get update && \
 COPY --from=builder /home/jimi /home/jimi
 
 # copy shared certs and settings file into /data folder
-COPY docker/shared ./
+COPY docker/data /home/jimi/data
 
 COPY core /home/jimi/core
 COPY system /home/jimi/system
@@ -55,6 +55,9 @@ COPY react-web /home/jimi/react-web
 WORKDIR /home/jimi
 
 COPY jimi_core.py jimi_cli.py jimi.py docker/jimi-core/entrypoint.sh ./
+
+# copy shared certs and settings file into /data folder
+COPY docker/settings/settings.json data/
 
 RUN chmod 700 entrypoint.sh
 ENV PATH="/jimi/.venv/bin:$PATH"
