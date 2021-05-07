@@ -43,7 +43,7 @@ RUN apt-get update && \
 COPY --from=builder /home/jimi /home/jimi
 
 # copy shared certs and settings file into /data folder
-COPY docker/data /home/jimi/data
+#COPY docker/data /home/jimi/data
 
 # copy repo source code into container image
 COPY core /home/jimi/core
