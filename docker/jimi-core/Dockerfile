@@ -57,7 +57,7 @@ WORKDIR /home/jimi
 COPY jimi_core.py jimi_cli.py jimi.py docker/jimi-core/entrypoint.sh ./
 
 # copy shared certs and settings file into /data folder
-COPY docker/settings/settings.json data/
+COPY docker/settings/settings.json data/settings.json
 
 RUN chmod 700 entrypoint.sh
 ENV PATH="/jimi/.venv/bin:$PATH"

@@ -61,7 +61,7 @@ RUN head jimi_web.py -n -4 > jimi_web2.py && \
     mv jimi_web2.py jimi_web.py
 
 # copy shared certs and settings file into /data folder
-COPY docker/settings/settings.json data/
+COPY docker/settings/settings.json data/settings.json
 
 #RUN echo "from jimi_web import api\n\napplication = api.webServer\n\nif __name__ == '__main__':\n\tapplication.run()" > start.py
 #RUN echo "gunicorn --bind 0.0.0.0:4443 --workers 4 --threads 10 --certfile=data/web.cert --key=data/web.key start" > start_web.sh
