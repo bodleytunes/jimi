@@ -69,8 +69,8 @@ steps:
         from_secret: ssh_key
       port: 22
       script:
-        - kubectl set image deployment/jimi-core jimi-core=reg.wizznet.co.uk:80/jimi-core:${DRONE_SEMVER} -n jimi
-        - kubectl set image deployment/jimi-web jimi-web=reg.wizznet.co.uk:80/jimi-web:${DRONE_SEMVER} -n jimi
+        - kubectl set image deployment/jimi-core jimi-core=reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER} -n jimi
+        - kubectl set image deployment/jimi-web jimi-web=reg.wizznet.co.uk:80/jimi/jimi-web:${DRONE_SEMVER} -n jimi
         - kubectl rollout restart deployment/jimi-core -n jimi
         - kubectl rollout restart deployment/jimi-web -n jimi
 
