@@ -59,6 +59,19 @@ steps:
       ref:
         - refs/tags/v*
 
+  # Re-deploy pods
+  - name: Redeploy  Jimi pods in Rancher
+    image: appleboy/drone-ssh
+    settings:
+      host: 10.101.0.100
+      username: root
+      key:
+        from_secret: ssh_key
+      port: 22
+      script:
+        - kubectl rollout restart deployment/jimi-core -n jimi
+        - kubectl rollout restart deployment/jimi-web -n jimi
+
 volumes:
   - name: docker_socket
     host:
