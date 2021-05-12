@@ -3,7 +3,7 @@ type: docker
 name: default
 
 steps:
-  - name: jimi-core
+  - name: Build tagged jimi-core container image then push artifact to Harbor registry
     image: docker
     settings:
       insecure: true
@@ -31,7 +31,7 @@ steps:
       ref:
         - refs/tags/v*
 
-  - name: jimi-web
+  - name: Build tagged jimi-web container image then push artifact to Harbor registry
     image: docker
     settings:
       insecure: true
@@ -60,7 +60,7 @@ steps:
         - refs/tags/v*
 
   # Re-deploy pods
-  - name: Redeploy  Jimi pods in Rancher
+  - name: Set updated image version in rancher then redeploy Jimi pods in Rancher
     image: appleboy/drone-ssh
     settings:
       host: 10.101.0.100
