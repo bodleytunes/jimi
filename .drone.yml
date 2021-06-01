@@ -1,0 +1,86 @@
+kind: pipeline
+type: docker
+name: default
+
+steps:
+  - name: Build tagged jimi-core container image then push artifact to Harbor registry
+    image: docker
+    settings:
+      insecure: true
+      username:
+        from_secret: username
+      password:
+        from_secret: password
+    privileged: true
+    environment:
+      DRONE_DOCKER_CONFIG: /root/.docker/config.json
+    volumes:
+      - name: docker_socket
+        path: /var/run/docker.sock
+      - name: auth
+        path: /root/.docker/config.json
+    commands:
+      - "docker build -t jimi-core . -f docker/jimi-core/Dockerfile"
+      - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
+      - "docker tag jimi-core reg.wizznet.co.uk:80/jimi/jimi-core:latest"
+      - "docker push reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER}"
+      - "docker push reg.wizznet.co.uk:80/jimi/jimi-core:latest"
+    when:
+      event:
+        - tag
+      ref:
+        - refs/tags/v*
+
+  - name: Build tagged jimi-web container image then push artifact to Harbor registry
+    image: docker
+    settings:
+      insecure: true
+      username:
+        from_secret: username
+      password:
+        from_secret: password
+    privileged: true
+    environment:
+      DRONE_DOCKER_CONFIG: /root/.docker/config.json
+    volumes:
+      - name: docker_socket
+        path: /var/run/docker.sock
+      - name: auth
+        path: /root/.docker/config.json
+    commands:
+      - "docker build -t jimi-web . -f docker/jimi-web/Dockerfile"
+      - "docker tag jimi-web reg.wizznet.co.uk:80/jimi/jimi-web:${DRONE_SEMVER}"
+      - "docker tag jimi-web reg.wizznet.co.uk:80/jimi/jimi-web:latest"
+      - "docker push reg.wizznet.co.uk:80/jimi/jimi-web:${DRONE_SEMVER}"
+      - "docker push reg.wizznet.co.uk:80/jimi/jimi-web:latest"
+    when:
+      event:
+        - tag
+      ref:
+        - refs/tags/v*
+
+  # Re-deploy pods
+  - name: Set updated image version
+    image: appleboy/drone-ssh
+    settings:
+      host: 10.101.0.100
+      username: root
+      key:
+        from_secret: ssh_key
+      port: 22
+      script:
+        - kubectl set image deployment/jimi-core jimi-core=reg.wizznet.co.uk:80/jimi/jimi-core:${DRONE_SEMVER} -n jimi
+        - kubectl set image deployment/jimi-web jimi-web=reg.wizznet.co.uk:80/jimi/jimi-web:${DRONE_SEMVER} -n jimi
+        - kubectl rollout restart deployment/jimi-core -n jimi
+        - kubectl rollout restart deployment/jimi-web -n jimi
+
+volumes:
+  - name: docker_socket
+    host:
+      path: /var/run/docker.sock
+  - name: auth
+    host:
+      path: /root/.docker/config.json
+
+image_pull_secrets:
+  - dockerconfigjson

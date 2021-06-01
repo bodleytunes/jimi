@@ -1,0 +1,66 @@
+version: '3.7'
+services:
+  db:
+    hostname: jimi-db
+    container_name: jimi-db
+    image: mongo:latest
+    ports:
+    - "27017:27017"
+    networks:
+      jimi_net_overlay:
+    volumes:
+      - /docker/volumes/jimi-db:/data/db
+    deploy:
+      placement:
+        constraints:
+          - node.role == worker
+
+  core:
+    hostname: jimi-core
+    container_name: jimi-core
+    image: jimi-core:latest
+    depends_on: 
+      - db
+    hostname: jimi-core
+    build:
+      context: .
+      dockerfile: ./docker/jimi-core/Dockerfile
+    volumes:
+    - ./jimi-core/data/log:/home/jimi/log
+    - ./plugins:/home/jimi/plugins
+    ports:
+    - "5000:5000"
+    tty: true
+    entrypoint:  ["./entrypoint.sh"]
+    networks:
+      jimi_net_overlay:
+
+  web:
+    build:
+      context: .
+      dockerfile: ./docker/jimi-web/Dockerfile
+    volumes:
+    - ./jimi-web/data/log:/home/jimi/log
+    - ./plugins:/home/jimi/plugins
+    ports:
+    - "4443:4443"
+    - "5002:5002"
+    networks:
+      jimi_net_overlay:
+    hostname: jimi-web
+    container_name: jimi-web
+    image: jimi-web:latest
+    depends_on: 
+      - core
+    entrypoint: ["./start_web.sh"]
+
+networks:
+  jimi_net_overlay:
+    driver: overlay
+    ipam:
+      config:
+        - subnet: "172.16.10.0/24"
+
+
+
+
