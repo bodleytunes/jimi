@@ -139,6 +139,12 @@ if jimi.api.webServer:
 				jimi.cluster.cluster.clusterMember.checksum = fileIntegrityRegister()
 				jimi.cluster.cluster.clusterMember.update(["checksum"])
 				return {}, 200
+
+			@jimi.api.webServer.route(jimi.api.base+"system/reload/module/<moduleName>/", methods=["GET"])
+			@jimi.auth.systemEndpoint
+			def reloadModule(moduleName):
+				jimi.helpers.reloadModulesWithinPath(moduleName)
+				return {}, 200
 		
 		if jimi.api.webServer.name == "jimi_web":
 			@jimi.api.webServer.route(jimi.api.base+"system/update/<systemID>/<pullFromSystemID>/", methods=["GET"])
@@ -148,7 +154,7 @@ if jimi.api.webServer:
 				if not url:
 					return {}, 404
 				apiEndpoint = "system/update/{0}/".format(pullFromSystemID)
-				response = jimi.helpers.apiCall("GET",apiEndpoint,token=jimi.api.g.sessionToken,overrideURL=url)
+				response = jimi.helpers.apiCall("GET",apiEndpoint,token=jimi.api.g.sessionToken,overrideURL=url,timeout=60)
 				return { "url" : url, "response" : response.status_code }, 200
 
 			@jimi.api.webServer.route(jimi.api.base+"system/checksum/<systemID>/", methods=["GET"])
@@ -158,5 +164,5 @@ if jimi.api.webServer:
 				if not url:
 					return {}, 404
 				apiEndpoint = "system/checksum/"
-				response = jimi.helpers.apiCall("GET",apiEndpoint,token=jimi.api.g.sessionToken,overrideURL=url)
+				response = jimi.helpers.apiCall("GET",apiEndpoint,token=jimi.api.g.sessionToken,overrideURL=url,timeout=60)
 				return { "url" : url, "response" : response.status_code }, 200

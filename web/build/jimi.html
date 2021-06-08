@@ -2,7 +2,13 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap-5.0.0-beta3/css/bootstrap.min.css') }}">
     <script src="{{ url_for('static', filename='includes/bootstrap-5.0.0-beta3/js/bootstrap.min.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/theme.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='includes/bootstrap-icons-1.5.0/bootstrap-icons.css') }}">
 {%- endmacro -%}
+
+{% macro jquery() -%}
+    <script src="{{ url_for('static', filename='includes/jquery-3.6.0/js/jquery-3.6.0.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='javascript/helpers.js') }}"></script>
+{% endmacro -%}
 
 {% macro charts() -%}
     <script src="{{ url_for('static', filename='includes/chartjs-3.0.2/js/chartjs.js') }}"></script>

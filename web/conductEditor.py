@@ -257,7 +257,7 @@ def conductExport(conductID):
                     result["ui"][flow["flowID"]]["x"] = flowUI.x
                     result["ui"][flow["flowID"]]["y"] = flowUI.y
                     result["ui"][flow["flowID"]]["title"] = flowUI.title
-    return render_template("blank.html",content=result, CSRF=jimi.api.g.sessionData["CSRF"]), 200
+    return render_template("blank.html",content=json.dumps(result,indent=3), CSRF=jimi.api.g.sessionData["CSRF"]), 200
 
 @jimi.api.webServer.route("/conductEditor/<conductID>/import/", methods=["GET"])
 def conductImport(conductID):
@@ -273,7 +273,7 @@ def conductImportData(conductID):
     access, accessIDs, adminBypass = jimi.db.ACLAccess(jimi.api.g.sessionData,conductObj.acl,"write")
     if access:
         data = json.loads(jimi.api.request.data)
-        importData = jimi.helpers.typeCast(data["importData"])
+        importData = json.loads(data["importData"])
 
         if data["appendObjects"]:
             conductObj.flow = conductObj.flow + importData["flow"]
